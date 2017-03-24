@@ -114,22 +114,22 @@ My final model consisted of the following layers:
 
 The code for training the model is located in the eleventh cell of the ipython notebook.
 
-To train the model, I used an ....
+To train the model, I used an Adam Optimizer with a learning rate of 0.001.  I considered regularizing the outputs but I found when experimenting that it was suboptimal.  I used a batch size of 128 and trained for 30 epochs.
 
 ###### 5. Describe the approach taken for finding a solution. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 The code for calculating the accuracy of the model is located in the ninth cell of the Ipython notebook.
 
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ?
-* test set accuracy of ?
+* validation set accuracy of 95.4%
+* test set accuracy of 93.4%
 
 If a well known architecture was chosen:
 * What architecture was chosen?
 * Why did you believe it would be relevant to the traffic sign application?
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
 
+I chose the LeNet architecture because it is well tested and proven.  I believed it would be relevant to the traffic signs because it predicts across a relatively small number of classes.  It seems to have performed well in terms of the test set as the validation and test performance are fairly close- this leads me to believe that I successfully avoided overfitting in the model.
 
 ### Test a Model on New Images
 
@@ -137,8 +137,14 @@ If a well known architecture was chosen:
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6]
-![alt text][image7] ![alt text][image8]
+[example0]: ./images/class%202.jpg "Speed limit 50"
+[example1]: ./images/class%203.jpeg "Speed limit 60"
+[example2]: ./images/class%2011.jpeg "Right of way"
+[example3]: ./images/class%2038.jpeg "Keep right"
+[example4]: ./images/class%2040.jpeg "Roundabout mandatory"
+
+![alt text][example0] ![alt text][example1] ![alt text][example2]
+![alt text][example3] ![alt text][example4]
 
 The first image might be difficult to classify because ...
 
@@ -150,28 +156,65 @@ Here are the results of the prediction:
 
 | Image			        |     Prediction	        					|
 |:---------------------:|:---------------------------------------------:|
-| Stop Sign      		| Stop sign   									|
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+| Speed limit 50     		| Speed limit 50   									|
+| Speed limit 60     			| No passing 										|
+| Right of way					| Right of way											|
+| Keep right      		| Slippery Road					 				|
+| Roundabout Mandatory		| Priority Road      							|
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
+The model was able to correctly guess 2 of the 5 traffic signs, which gives an accuracy of 40%.
+
+Why did the outside test perform poorly?  I think with an augmented data set the model could have done a lot better.  With more time, I would have skewed the test images (so the images would appear at an angle, to be more consistent with a real photograph).  I also think it's likely that the height/width aspect ratio on the samples I downloaded from the internet and then compressed to 32x32 is not consistent with how the model was trained.
 
 ###### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction and identify where in your code softmax probabilities were outputted. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
 The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
+#### Image 0: Speed limit 50
 
 | Probability         	|     Prediction	        					|
 |:---------------------:|:---------------------------------------------:|
-| .60         			| Stop sign   									|
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
+|Speed limit (50km/h): |0.80|
+|Speed limit (80km/h): |0.14|
+|Speed limit (60km/h): |0.05|
+|Speed limit (30km/h): |0.01|
+|Speed limit (70km/h): |0.00|
 
 
-For the second image ...
+#### Image 1: Speed limit 60
+
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+|No passing: |0.75
+|No passing for vehicles over 3.5 metric tons: |0.20
+|Dangerous curve to the right: |0.01
+|Vehicles over 3.5 metric tons prohibited: |0.01
+|Ahead only: |0.01
+
+#### Image 2: Right of way
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+|Right-of-way at the next intersection: |0.99
+|Beware of ice/snow: |0.00
+|Pedestrians: |0.00
+|Double curve: |0.00
+|Roundabout mandatory: |0.00
+
+#### Image 3: Keep right
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+|Slippery road: |0.94
+|Dangerous curve to the left: |0.03
+|Road narrows on the right: |0.02
+|No passing for vehicles over 3.5 metric tons: |.01
+|Road work: |0.00
+
+#### Image 4: Roundabout mandatory
+| Probability         	|     Prediction	        					|
+|:---------------------:|:---------------------------------------------:|
+|Priority road: |0.96
+|No passing for vehicles over 3.5 metric tons: |0.02
+|Roundabout mandatory: |0.01
+|End of no passing by vehicles over 3.5 metric tons: |0.00
+|No passing: |0.00
