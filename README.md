@@ -12,18 +12,6 @@ The goals / steps of this project are the following:
 * Analyze the softmax probabilities of the new images
 * Summarize the results with a written report
 
-
-[//]: # (Image References)
-
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
-
 ## Rubric Points
 Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
 
@@ -77,7 +65,6 @@ Next, I used [exposure.adapt_hist](http://scikit-image.org/docs/dev/api/skimage.
 
 As a last step, I normalized the image data to bring the values to a range of [0, 1].
 
-
 ###### 2. Describe how, and identify where in your code, you set up training, validation and testing data. How much data was in each set? Explain what techniques were used to split the data into these sets. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, identify where in your code, and provide example images of the additional data)
 
 I used the training, validation, and test sets as provided in the project instructions.
@@ -121,8 +108,8 @@ To train the model, I used an Adam Optimizer with a learning rate of 0.001.  I c
 The code for calculating the accuracy of the model is located in the ninth cell of the Ipython notebook.
 
 My final model results were:
-* validation set accuracy of 95.4%
-* test set accuracy of 93.4%
+* validation set accuracy of 94.8%
+* test set accuracy of 93.6%
 
 If a well known architecture was chosen:
 * What architecture was chosen?
@@ -146,7 +133,7 @@ Here are five German traffic signs that I found on the web:
 ![alt text][example0] ![alt text][example1] ![alt text][example2]
 ![alt text][example3] ![alt text][example4]
 
-The first image might be difficult to classify because ...
+I cropped the images before running them through the model so that the aspect ratio would be reasonably close to 1:1.
 
 ###### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. Identify where in your code predictions were made. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
@@ -157,15 +144,15 @@ Here are the results of the prediction:
 | Image			        |     Prediction	        					|
 |:---------------------:|:---------------------------------------------:|
 | Speed limit 50     		| Speed limit 50   									|
-| Speed limit 60     			| No passing 										|
+| Speed limit 60     			| Speed limit 56 										|
 | Right of way					| Right of way											|
-| Keep right      		| Slippery Road					 				|
+| Keep right      		| Keep Right					 				|
 | Roundabout Mandatory		| Priority Road      							|
 
 
-The model was able to correctly guess 2 of the 5 traffic signs, which gives an accuracy of 40%.
+The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%.
 
-Why did the outside test perform poorly?  I think with an augmented data set the model could have done a lot better.  With more time, I would have skewed the test images (so the images would appear at an angle, to be more consistent with a real photograph).  I also think it's likely that the height/width aspect ratio on the samples I downloaded from the internet and then compressed to 32x32 is not consistent with how the model was trained.
+For the final image I noted that there is a watermark, which might have thrown off the model (and would not be realistic).  The model did not make a confident prediction, as seen below.
 
 ###### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction and identify where in your code softmax probabilities were outputted. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
@@ -186,11 +173,11 @@ The code for making predictions on my final model is located in the 11th cell of
 
 | Probability         	|     Prediction	        					|
 |:---------------------:|:---------------------------------------------:|
-|No passing: |0.75
-|No passing for vehicles over 3.5 metric tons: |0.20
-|Dangerous curve to the right: |0.01
-|Vehicles over 3.5 metric tons prohibited: |0.01
-|Ahead only: |0.01
+|Speed limit (60km/h): |0.73
+|Speed limit (80km/h): |0.20
+|Speed limit (50km/h): |0.08
+|Speed limit (30km/h): |0.00
+|Keep right: |0.00
 
 #### Image 2: Right of way
 | Probability         	|     Prediction	        					|
@@ -204,17 +191,17 @@ The code for making predictions on my final model is located in the 11th cell of
 #### Image 3: Keep right
 | Probability         	|     Prediction	        					|
 |:---------------------:|:---------------------------------------------:|
-|Slippery road: |0.94
-|Dangerous curve to the left: |0.03
-|Road narrows on the right: |0.02
-|No passing for vehicles over 3.5 metric tons: |.01
-|Road work: |0.00
+|Keep right: |1.00
+|Yield: |0.00
+|Stop: |0.00
+|Slippery road: |0.00
+|Turn left ahead: |0.00
 
 #### Image 4: Roundabout mandatory
 | Probability         	|     Prediction	        					|
 |:---------------------:|:---------------------------------------------:|
-|Priority road: |0.96
-|No passing for vehicles over 3.5 metric tons: |0.02
+|Priority road: |0.48
+|End of no passing by vehicles over 3.5 metric tons: |0.30
+|No passing for vehicles over 3.5 metric tons: |0.19
+|End of no passing: |0.01
 |Roundabout mandatory: |0.01
-|End of no passing by vehicles over 3.5 metric tons: |0.00
-|No passing: |0.00
